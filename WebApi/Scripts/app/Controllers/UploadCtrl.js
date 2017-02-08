@@ -20,9 +20,9 @@ app.controller('UploadCtrl',
         $scope.selected = { value: $scope.listCells[0] };
         $scope.date = new Date();
         $scope.itemFile = {};
-        $scope.FileUpload = function (item) {
+        $scope.FileUpload = function (item) {            
             var period = {
-                AuxPeriod: date,
+                AuxPeriod: $scope.date,
                 Cell: $scope.selected.value.id,
                 PeriodNumber: 0
             };
@@ -39,15 +39,17 @@ app.controller('UploadCtrl',
                         plain: true
                     }).then(function () {
                         $scope.FileUploadCSV(item);
-                    }, function () {
+                    }, function () { 
                     });
                 }
-                else {
+                else {                    
                     $scope.FileUploadCSV(item);
                 }
             })        
         }
         $scope.FileUploadCSV = function (item) {
+            item.file.styleUploadMessage = 'warning';
+            item.file.stateUploadMessage = 'Procesando';
             FileReader.readAsDataURL(item._file, $scope).then(function (resp) {
                 var string64 = resp.split(",");
                 var listFileCsv = new Array();
@@ -61,20 +63,28 @@ app.controller('UploadCtrl',
                 listFileCsv.push(fileCsv);
                 var UploadCsv = UploadService.UploadCsv(listFileCsv);
                 UploadCsv.then(function (data) {
-                    console.log(data)
-                }, function (error) { });
+                    item.file.styleUploadMessage = 'success';
+                    item.file.stateUploadMessage = 'Completado';
+                    alert('Proceso Completado');
+                }, function (error) {
+                    item.file.styleUploadMessage = 'danger';
+                    item.file.stateUploadMessage = 'Error';
+                    alert('Error Interno');
+                });
                 uploader.onProgressItem(item, 100);
                 uploader.onProgressAll(100);
                 // Do stuff
                 //$scope.encoded = base64.encode(resp);
                 console.log($scope.itemFile)
+                
             }, function (err) {
-                // Do stuff
+                item.file.styleUploadMessage = 'danger';
+                item.file.stateUploadMessage = 'Error';
             });
         }
         $scope.FileUploadAll = function (items) {
             var period = {
-                AuxPeriod: date,
+                AuxPeriod: $scope.date,
                 Cell: $scope.selected.value.id,
                 PeriodNumber: 0
             };
@@ -101,7 +111,9 @@ app.controller('UploadCtrl',
         }
         $scope.FileUploadAllCSV = function (items) {
             var listFileCsv = new Array();
-            items.queue.forEach(function (item, index) {                
+            items.queue.forEach(function (item, index) {
+                item.file.styleUploadMessage = 'warning';
+                item.file.stateUploadMessage = 'Procesando';
                 FileReader.readAsDataURL(item._file, $scope).then(function (resp) {
                     var string64 = resp.split(",");
                     var fileCsv = {
@@ -117,8 +129,18 @@ app.controller('UploadCtrl',
                         if (index === (listFileCsv.length - 1)) {
                             var UploadCsv = UploadService.UploadCsv(listFileCsv);
                             UploadCsv.then(function (data) {
-                                console.log(data)
-                            }, function (error) { });
+                                items.queue.forEach(function (auxItem) {
+                                    auxItem.file.styleUploadMessage = 'success';
+                                    auxItem.file.stateUploadMessage = 'Completado';
+                                }, this);
+                                alert('Proceso Completado');
+                            }, function (error) {
+                                items.queue.forEach(function (auxItem) {
+                                    auxItem.file.styleUploadMessage = 'danger';
+                                    auxItem.file.stateUploadMessage = 'Error';
+                                }, this);
+                                alert('Error Interno');
+                            });
                             uploader.onProgressItem(item, 100);
                             uploader.onProgressAll(100);
                         }   
@@ -136,7 +158,7 @@ app.controller('UploadCtrl',
             name: 'customFilter',
             fn: function (item /*{File|FileLikeObject}*/, options) {
                 return this.queue.length < 10;
-            }
+            },        
         });
 
         // CALLBACKS
@@ -145,6 +167,8 @@ app.controller('UploadCtrl',
             console.info('onWhenAddingFileFailed', item, filter, options);
         };
         uploader.onAfterAddingFile = function (fileItem) {
+            fileItem.file.styleUploadMessage='info';
+            fileItem.file.stateUploadMessage='Original';
             console.info('onAfterAddingFile', fileItem);
         };
         uploader.onAfterAddingAll = function (addedFileItems) {
