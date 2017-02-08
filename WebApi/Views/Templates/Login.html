@@ -1,0 +1,43 @@
+﻿<div class="container">
+    <div class="col-sm-6 col-sm-offset-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title text-center">
+                    Login Carga CSV PPL
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group text-center">
+                        <br />
+                        <span class="glyphicon glyphicon-lock" style="font-size: 10em"></span>
+                        <br />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">Usuario:</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" ng-model="username"/>
+                        </div>                        
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3">Password:</label>
+                        <div class="col-xs-9">
+                            <input type="password" class="form-control" ng-model="password"/>
+                        </div>
+                    </div>                    
+                    <div class="form-group text-center">
+                        <button type="button" class="btn btn-primary" ng-click="Login()">Iniciar Sessión</button>
+                    </div>
+                    <div class="form-group text-center">
+                        <div class="{{messageStyle}}">
+                            <strong>{{message}}</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <strong>Inicie Sessión con su Usuario y Password del Active Directory</strong>
+            </div>
+        </div>
+    </div>    
+</div>

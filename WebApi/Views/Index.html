@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <!--Estilos-->
+    <!--Bootstrap-->
+    <link href="../Content/bootstrap.css" rel="stylesheet" />
+    <link href="../Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="../Content/select.css" rel="stylesheet" />
+    <link href="../Content/ngDialog.css" rel="stylesheet" />
+    <link href="../Content/ngDialog-theme-default.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-inverse" ng-controller="MenuCtrl">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="">Carga CSV PPL</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <!--<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>-->
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">PPL<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#!Upload">Carga CSV</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#!Upload">Carga CSV</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <!--<form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>-->
+                <ul class="nav navbar-nav navbar-right">
+                    <!--<li><a href="#">Link</a></li>-->
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{displayName}}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <!--<li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>-->
+                            <li role="separator" class="divider"></li>
+                            <li><a href="" ng-click="Logged()">Cerrar Sessión</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <div class="container" ng-view>
+
+    </div>
+    <!--Scripts-->
+    <!--Jquery-->
+    <script src="../Scripts/jquery-3.1.1.js"></script>
+    <!--Moment-->
+    <script src="../Scripts/moment.js"></script>
+    <!--Bootstrap-->
+    <script src="../Scripts/bootstrap.js"></script>
+    <script src="../Scripts/bootstrap-datetimepicker.js"></script>
+    <!--Angular-->
+    <!--Librerias-->
+    <script src="../Scripts/angular.js"></script>
+    <script src="../Scripts/angular-route.js"></script>
+    <script src="../Scripts/ngStorage.js"></script>
+    <script src="../Scripts/angular-csv-import.js"></script>
+    <script src="../Scripts/angular-file-upload.js"></script>
+    <script src="../Scripts/angular-filereader.js"></script>
+    <script src="../Scripts/angular-eonasdan-datetimepicker.js"></script>
+    <script src="../Scripts/select.js"></script>
+    <script src="../Scripts/ngDialog.js"></script>
+    <!--Aplicacion-->
+    <script src="../Scripts/app/app.js"></script>
+    <script src="../Scripts/app/Config/Config.js"></script>
+    <!--Controllers-->
+    <script src="../Scripts/app/Controllers/UploadCtrl.js"></script>
+    <script src="../Scripts/app/Controllers/LoginCtrl.js"></script>
+    <script src="../Scripts/app/Controllers/MenuCtrl.js"></script>
+    <!--Services-->
+    <script src="../Scripts/app/Services/UploadService.js"></script>
+    <script src="../Scripts/app/Services/LoginService.js"></script>
+</body>
+</html>

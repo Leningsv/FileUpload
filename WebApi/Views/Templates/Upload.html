@@ -1,0 +1,208 @@
+﻿<br />
+<div class="panel panel-primary">
+    <div class="panel-heading text-center">
+        <h3 class="panel-title">Carga de Archivos PPL</h3>        
+    </div>
+    <div class="panel-body">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-xs-4">
+                    <!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
+                    <label>Cargue los Horarios de Visitas</label>
+                    <input type="file" nv-file-select="" uploader="uploader" multiple />
+                </div>
+                <div class="col-xs-4">
+                    <label>Periodo:</label>
+                    <div class="input-group" id="my-date" datetimepicker ng-model="date" options="{format:'YYYY-MM'}">
+                        <input class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <label>Centro Reclución Social:</label>
+                    <ui-select ng-model="selected.value">
+                        <ui-select-match>
+                            <span ng-bind="$select.selected.name"></span>
+                        </ui-select-match>
+                        <ui-select-choices repeat="item in (listCells | filter: $select.search) track by item.id">
+                            <span ng-bind="item.name"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>                
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <div ng-show="uploader.isHTML5">
+                        <!-- Example: nv-file-drop="" uploader="{Object}" options="{Object}" filters="{String}" -->
+                        <div nv-file-drop="" uploader="uploader" options="{ url: '/foo' }">
+                            <div nv-file-over="" uploader="uploader" over-class="another-file-over-class" class="well my-drop-zone">
+                                Adjunte sus archivos aqui...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <p>Cantidad de Archivos a Subir: {{ uploader.queue.length }}</p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th width="50%">Nombre</th>
+                                <th ng-show="uploader.isHTML5">Tamano</th>
+                                <!--<th ng-show="uploader.isHTML5">Progreso</th>
+                                <th>Status</th>-->
+                                <th>Accion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in uploader.queue">
+                                <td><strong>{{ item.file.name }}</strong></td>
+                                <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                <!--<td ng-show="uploader.isHTML5">
+                                    <div class="progress" style="margin-bottom: 0;">
+                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                    </div>
+                                </td>-->
+                                <!--<td class="text-center">
+                                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                </td>-->
+                                <td nowrap>                                    
+                                    <button type="button" class="btn btn-success btn-xs" ng-click="FileUpload(item)" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                        <span class="glyphicon glyphicon-upload"></span> Cargar
+                                    </button>
+                                    <!--<button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                        <span class="glyphicon glyphicon-upload"></span> Cargar
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                        <span class="glyphicon glyphicon-ban-circle"></span> Cancelar
+                                    </button>-->
+                                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span> Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <fieldset class="form-inline text-center">
+                    <button type="button" class="btn btn-success btn-s" ng-click="FileUploadAll(uploader)" ng-disabled="!uploader.getNotUploadedItems().length">
+                        <span class="glyphicon glyphicon-upload"></span> Cargar Todos
+                    </button>
+                    <!--<button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                        <span class="glyphicon glyphicon-upload"></span> Cargar Todos
+                    </button>
+                    <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">
+                        <span class="glyphicon glyphicon-ban-circle"></span> Cancelar Todos
+                    </button>-->
+                    <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+                        <span class="glyphicon glyphicon-trash"></span> Eliminar Todos
+                    </button>
+                </fieldset>
+            </div>
+            <!--<div class="form-group">
+                <div class="col-xs-12">
+                    Progreso Global:
+                    <div class="progress" style="">
+                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+    </div>
+    <div class="panel-footer">
+    </div>
+</div>
+
+
+<!--<br />
+<div class="panel panel-primary">
+    <div class="panel-heading text-center">
+        <h3 class="panel-title">
+            Cargar Archivos PPL | {{period |  date:'yyyy-MM'}}
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-horizontal">
+            <div class="form-group text-center">
+                <fieldset class="form-inline">                    
+                    <button type="button" class="btn btn-primary">
+                        <ng-csv-import content="csv.content"
+                                       material
+                                       header="csv.header"
+                                       header-visible="csv.headerVisible"
+                                       separator="csv.separator = ','"
+                                       result="csv.result"
+                                       accept="csv.accept"></ng-csv-import>
+                    </button> 
+                    <button class="btn btn-success" ng-click="UploadCSV(csv.result)" ng-disabled="!csv.result"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Cargar CSV</button>                                        
+                </fieldset>                
+            </div>
+            <div class="form-group">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Pabellon</th>
+                            <th class="text-center">Celda</th>
+                            <th class="text-center">Horario</th>                             
+                            <th class="text-center">Año</th> 
+                            <th class="text-center">Mes</th> 
+                            <th class="text-center">Accion</th>                         
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        <tr ng-repeat="item in (result=csv.result)">
+                            <td>
+                                <label ng-if="!item.StateEdit">{{item[0]}}</label>
+                                <input type="text" class="form-control" ng-model="item[0]" ng-if="item.StateEdit"/>
+                            </td>
+                            <td>
+                                <label ng-if="!item.StateEdit">{{item[1]}}</label>
+                                <input type="text" class="form-control" ng-model="item[1]" ng-if="item.StateEdit" />                                
+                            </td>
+                            <td>
+                                <label ng-if="!item.StateEdit">{{item[2]}}</label>
+                                <input type="text" class="form-control" ng-model="item[2]" ng-if="item.StateEdit" />  
+                            </td>
+                            <td>
+                                <label ng-if="!item.StateEdit">{{item[3]}}</label>
+                                <input type="text" class="form-control" ng-model="item[3]" ng-if="item.StateEdit" />
+                            </td>
+                            <td>
+                                <label ng-if="!item.StateEdit">{{item[4]}}</label>
+                                <input type="number" class="form-control" ng-model="item[4]" ng-if="item.StateEdit" />
+                            </td>
+                            <td>
+                                <label ng-if="!item.StateEdit">{{item[5]}}</label>
+                                <input type="number" class="form-control" ng-model="item[5]" ng-if="item.StateEdit" />
+                            </td>
+                            <td>
+                                <button class="btn btn-warning" ng-if="item.StateEdit" ng-click="item.StateEdit=false">Atras</button>
+                                <div class="btn-group" ng-if="!item.StateEdit">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Acción <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">                                        
+                                        <li><a ng-click="EditItem($index)">Editar</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a ng-click="DeleteItem($index)">Eliminar</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+
+    </div>
+</div>-->
